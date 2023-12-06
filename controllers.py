@@ -36,3 +36,4 @@ def apagarProfissional(id_profissional):
 def editarProfissional(id_profissional, nova_especialidade):
     dic_profissionais = profissionalID(id_profissional)
     dic_profissionais['especialidade'] = nova_especialidade
+    return dic_profissionais

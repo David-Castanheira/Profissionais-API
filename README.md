@@ -29,7 +29,6 @@ $ pip install requests
 
 Depois disso, importe ambos nos arquivos em que a utilização destes será necessária, assim como definido abaixo:
 
-```
-from flask import Flask
-from flask import request
-```
+`from flask import Flask`
+
+`from flask import request`

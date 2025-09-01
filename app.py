@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-import controllers as controllers
+import controllers.ProfissionaisController as ProfissionaisController
 
 app = Flask(__name__)
 
@@ -11,21 +11,21 @@ def urlBase():
 # Rota GET - Retorna a lista de profissionais cadastrados
 @app.route('/profissionais', methods = ['GET'])
 def listarProfissionais():
-    return controllers.listarProfissionais()
+    return ProfissionaisController.listarProfissionais()
 
 # Rota POST - Retorna a lista de profissionais que foram adicionados 
 @app.route('/profissionais', methods = ['POST'])
 def criarProfissional():
-   controllers.adicionarProfissional({'nome': 'Fernando', 'id': 3, 'data_contratacao': '13/02/2021', 'especialidade': 'Gestor de trafego pago'})
-   controllers.adicionarProfissional({'nome': 'Lucas', 'id': 4, 'data_contratacao': '29/01/2015', 'especialidade': 'Analista de infraestrutura'})
+   ProfissionaisController.adicionarProfissional({'nome': 'Fernando', 'id': 3, 'data_contratacao': '13/02/2021', 'especialidade': 'Gestor de trafego pago'})
+   ProfissionaisController.adicionarProfissional({'nome': 'Lucas', 'id': 4, 'data_contratacao': '29/01/2015', 'especialidade': 'Analista de infraestrutura'})
    return "Profissionais adicionados com sucesso", 201
 
 # Rota GET - Faz uma busca de profissionais pelo ID
 @app.route('/profissionais/<int:idProfissional>', methods = ['GET'])
 def buscarProfissionalPorID(idProfissional):
     try:
-        return controllers.profissionalID(idProfissional)
-    except controllers.ProfissionalNaoEncontrado:
+        return ProfissionaisController.profissionalID(idProfissional)
+    except ProfissionaisController.ProfissionalNaoEncontrado:
         return ({'erro': 'Profissional nao encontrado'}, 400)
 
 # Tentativa 1 da rota PUT
@@ -72,18 +72,18 @@ def editarProfissionalPorID(idProfissional):
        return ({'erro': 'Profissional sem especialidade definida'}, 400)
    nova_especialidade = data['especialidade']
    try:
-       controllers.editarProfissional(idProfissional, nova_especialidade)
-       return controllers.profissionalID(idProfissional)
-   except controllers.ProfissionalNaoEncontrado:
+       ProfissionaisController.editarProfissional(idProfissional, nova_especialidade)
+       return ProfissionaisController.profissionalID(idProfissional)
+   except ProfissionaisController.ProfissionalNaoEncontrado:
        return ({'erro': 'Profissional nao encontrado'}, 400)
 
 # Rota Delete - Retorna uma lista com os profissionais removidos 
 @app.route('/profissionais/<int:idProfissional>', methods = ['DELETE'])
 def apagarProfissionalPorID(idProfissional):
     try:
-        controllers.apagarProfissional(idProfissional)
+        ProfissionaisController.apagarProfissional(idProfissional)
         return "Profissionais removidos com sucesso", 201
-    except controllers.ProfissionalNaoEncontrado:
+    except ProfissionaisController.ProfissionalNaoEncontrado:
         return ({'erro': 'Profissional nao encontrado'}, 400)
 
 app.run(host='0.0.0.0', port=5000, debug=True)
